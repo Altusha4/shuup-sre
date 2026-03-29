@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:15
+    container_name: shuup-db
+    environment:
+      POSTGRES_DB: shuup
+      POSTGRES_USER: shuup_user
+      POSTGRES_PASSWORD: shuup_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  web:
+    image: nginx:latest
+    container_name: shuup-web
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+volumes:
+  db_data:
